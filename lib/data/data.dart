@@ -1,17 +1,24 @@
 import 'dart:math';
 
 import 'countries.dart';
-
-List<String> tragedy = [
-  "A terrorist attack was carried by religious extremists",
-  "A hurricaine has caused massive damage",
-  "A bridge has collapsed killing many",
-  "A violent coup has ended democracy",
-];
-int tragedyLength = tragedy.length;
+import 'tragedies.dart';
 
 Random random = Random();
+String lastTragedy = "";
+String lastCountry = "";
 
-String getNewsStory() {
-  return "${tragedy[random.nextInt(tragedyLength)]} in ${countries[random.nextInt(countriesLength)]}";
+(String, String) getNewsStory() {
+  var (tragedyText, tragedyImagePath) = tragedy[random.nextInt(tragedyLength)];
+  while (tragedyText == lastTragedy) {
+    (tragedyText, tragedyImagePath) = tragedy[random.nextInt(tragedyLength)];
+  }
+  lastTragedy = tragedyText;
+
+  var country = countries[random.nextInt(countriesLength)];
+  while (country == lastCountry) {
+    country = countries[random.nextInt(countriesLength)];
+  }
+  lastCountry = country;
+
+  return ("$tragedyText in $country", tragedyImagePath);
 }

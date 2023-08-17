@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../data/data.dart';
@@ -15,6 +17,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<String> news = <String>[];
+  List<String> images = <String>[];
 
   void loadMoreNews() async {
     Future.delayed(
@@ -22,7 +25,9 @@ class _MyHomePageState extends State<MyHomePage> {
       () {
         setState(() {
           for (var i = 0; i < 20; i++) {
-            news.add(getNewsStory());
+            var (tragedyText, tragedyImagePath) = getNewsStory();
+            news.add(tragedyText);
+            images.add(tragedyImagePath);
           }
         });
       },
@@ -57,18 +62,39 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16.0),
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: max(MediaQuery.sizeOf(context).width ~/ 300, 1),
+        ),
+        padding: const EdgeInsets.all(6),
         itemCount: news.length + 1,
         itemBuilder: (context, index) {
           if (index == news.length) {
             loadMoreNews();
-            return const LinearProgressIndicator();
+            return const Center(
+              child: SizedBox(
+                height: 40,
+                width: 40,
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            );
           } else {
-            return NewsCard(newsItem: news[index]);
+            return NewsCard(newsItem: news[index], imagePath: images[index]);
           }
         },
       ),
+      // body: ListView.builder(
+      //   padding: const EdgeInsets.all(16.0),
+      //   itemCount: news.length + 1,
+      //   itemBuilder: (context, index) {
+      //     if (index == news.length) {
+      //       loadMoreNews();
+      //       return const LinearProgressIndicator();
+      //     } else {
+      //       return NewsCard(newsItem: news[index], imagePath: newsImagePaths[index]);
+      //     }
+      //   },
+      // ),
     );
   }
 }

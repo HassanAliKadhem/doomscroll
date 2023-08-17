@@ -4,6 +4,7 @@ import 'data/settings.dart';
 import 'screen/home_page.dart';
 
 void main() {
+  loadData();
   runApp(const MyApp());
 }
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: themeMode,
       child: const MyHomePage(title: 'Doom Scroll'),
-      builder: (context, value, child) {
+      builder: (context, mode, child) {
         return MaterialApp(
           title: 'Doom Scroll',
           theme: ThemeData(
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
               seedColor: Colors.deepPurple,
             ),
           ),
-          themeMode: value,
+          themeMode: mode,
           home: child,
         );
       },

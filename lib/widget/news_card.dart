@@ -2,22 +2,31 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import '../data/settings.dart';
+
 Random random = Random();
 
 class NewsCard extends StatelessWidget {
-  const NewsCard({super.key, required this.newsItem});
+  const NewsCard({super.key, required this.newsItem, required this.imagePath});
   final String newsItem;
+  final String imagePath;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 16.0),
+      margin: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          const SizedBox(
-            height: 300,
-            child: FlutterLogo(
-              size: 300,
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable: showImages,
+              builder: (context, show, child) {
+                if (show) {
+                  return Image.asset(imagePath);
+                } else {
+                  return const FlutterLogo();
+                }
+              },
             ),
           ),
           ListTile(
@@ -28,8 +37,7 @@ class NewsCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 const Icon(Icons.thumb_up),
-                Text((random.nextInt(100) * (random.nextInt(11) + 5))
-                    .toString()),
+                Text(random.nextInt(1000).toString()),
               ],
             ),
           ),
