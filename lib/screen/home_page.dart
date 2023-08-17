@@ -25,9 +25,9 @@ class _MyHomePageState extends State<MyHomePage> {
       () {
         setState(() {
           for (var i = 0; i < 20; i++) {
-            var (tragedyText, tragedyImagePath) = getNewsStory();
-            news.add(tragedyText);
-            images.add(tragedyImagePath);
+            var (newsText, newsImagePath) = getNewsStory();
+            news.add(newsText);
+            images.add(newsImagePath);
           }
         });
       },
@@ -69,9 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: CustomScrollView(
           slivers: [
+            const SliverPadding(padding: EdgeInsets.symmetric(vertical: 4.0)),
             SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: max(MediaQuery.sizeOf(context).width ~/ 300, 1),
@@ -84,7 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   if (index == news.length - 1) {
                     loadMoreNews();
                   }
-                  return NewsCard(newsItem: news[index], imagePath: images[index]);
+                  return NewsCard(
+                      newsText: news[index], imagePath: images[index]);
                 },
                 childCount: news.length,
               ),
@@ -94,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: EdgeInsets.all(8.0),
                 child: LinearProgressIndicator(),
               ),
-            )
+            ),
           ],
         ),
       ),

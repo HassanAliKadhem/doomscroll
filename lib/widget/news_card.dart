@@ -7,8 +7,8 @@ import '../data/settings.dart';
 Random random = Random();
 
 class NewsCard extends StatelessWidget {
-  const NewsCard({super.key, required this.newsItem, required this.imagePath});
-  final String newsItem;
+  const NewsCard({super.key, required this.newsText, required this.imagePath});
+  final String newsText;
   final String imagePath;
 
   @override
@@ -30,7 +30,7 @@ class NewsCard extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(newsItem),
+            title: Text(newsText),
             trailing: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
