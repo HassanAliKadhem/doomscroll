@@ -35,6 +35,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadMoreNews();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -62,39 +68,36 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: max(MediaQuery.sizeOf(context).width ~/ 300, 1),
-        ),
-        padding: const EdgeInsets.all(6),
-        itemCount: news.length + 1,
-        itemBuilder: (context, index) {
-          if (index == news.length) {
-            loadMoreNews();
-            return const Center(
-              child: SizedBox(
-                height: 40,
-                width: 40,
-                child: CircularProgressIndicator.adaptive(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CustomScrollView(
+          slivers: [
+            SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: max(MediaQuery.sizeOf(context).width ~/ 300, 1),
+                childAspectRatio: 0.8,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
               ),
-            );
-          } else {
-            return NewsCard(newsItem: news[index], imagePath: images[index]);
-          }
-        },
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  if (index == news.length - 1) {
+                    loadMoreNews();
+                  }
+                  return NewsCard(newsItem: news[index], imagePath: images[index]);
+                },
+                childCount: news.length,
+              ),
+            ),
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: LinearProgressIndicator(),
+              ),
+            )
+          ],
+        ),
       ),
-      // body: ListView.builder(
-      //   padding: const EdgeInsets.all(16.0),
-      //   itemCount: news.length + 1,
-      //   itemBuilder: (context, index) {
-      //     if (index == news.length) {
-      //       loadMoreNews();
-      //       return const LinearProgressIndicator();
-      //     } else {
-      //       return NewsCard(newsItem: news[index], imagePath: newsImagePaths[index]);
-      //     }
-      //   },
-      // ),
     );
   }
 }

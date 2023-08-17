@@ -14,7 +14,7 @@ class NewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(8.0),
+      clipBehavior: Clip.antiAlias,
       child: Column(
         children: [
           Expanded(
@@ -22,7 +22,7 @@ class NewsCard extends StatelessWidget {
               valueListenable: showImages,
               builder: (context, show, child) {
                 if (show) {
-                  return Image.asset(imagePath);
+                  return Image.asset(imagePath, fit: BoxFit.cover);
                 } else {
                   return const FlutterLogo();
                 }
