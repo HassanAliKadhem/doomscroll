@@ -10,7 +10,8 @@ late final SharedPreferences preferences;
 
 void loadData() async {
   preferences = await SharedPreferences.getInstance();
-  themeMode.value = _themes[preferences.getInt("themeMode") ?? 0] ?? ThemeMode.system;
+  themeMode.value =
+      _themes[preferences.getInt("themeMode") ?? 0] ?? ThemeMode.system;
   showImages.value = preferences.getBool("showImages") ?? true;
 }
 

@@ -4,6 +4,7 @@ import 'data/settings.dart';
 import 'screen/home_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   loadData();
   runApp(const MyApp());
 }
