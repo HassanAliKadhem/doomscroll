@@ -8,7 +8,7 @@ class DoomAboutDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const AboutDialog(
-      applicationVersion: "1.0.0",
+      applicationVersion: "1.0.1",
       children: [
         ListTile(
           title: Text("Made by"),

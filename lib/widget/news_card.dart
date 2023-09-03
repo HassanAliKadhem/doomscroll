@@ -36,7 +36,7 @@ class NewsCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                const Icon(Icons.thumb_up),
+                const Icon(Icons.thumb_up_rounded),
                 Text(random.nextInt(1000).toString()),
               ],
             ),

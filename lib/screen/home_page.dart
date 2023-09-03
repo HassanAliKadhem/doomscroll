@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../data/data.dart';
@@ -43,39 +42,36 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 2,
-        scrolledUnderElevation: 2,
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => const SettingsDialog(),
-              );
-            },
-            icon: const Icon(Icons.settings),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar.large(
+            title: Text(widget.title),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const SettingsDialog(),
+                  );
+                },
+                icon: const Icon(Icons.settings),
+              ),
+              IconButton(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => const DoomAboutDialog(),
+                  );
+                },
+                icon: const Icon(Icons.info),
+              ),
+            ],
           ),
-          IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => const DoomAboutDialog(),
-              );
-            },
-            icon: const Icon(Icons.info),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: CustomScrollView(
-          slivers: [
-            const SliverPadding(padding: EdgeInsets.symmetric(vertical: 4.0)),
-            SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: max(MediaQuery.sizeOf(context).width ~/ 300, 1),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+            sliver: SliverGrid(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 400,
                 childAspectRatio: 0.8,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
@@ -91,14 +87,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 childCount: news.length,
               ),
             ),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: LinearProgressIndicator(),
-              ),
+          ),
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: LinearProgressIndicator(),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
